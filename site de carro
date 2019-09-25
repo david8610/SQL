@@ -1,0 +1,27 @@
+create table marca (
+	id_marca numeric(7) constraint pk_marca primary key,
+	nome_marca varchar(120) not null unique,
+	ativo char (1) not null,
+	constraint marca_ativo check(ativo in ('S', 's', 'N', 'n'))
+);
+
+create sequence seq_id_marca
+	start with 100 
+	increment by 10 
+	no cycle
+	no cache
+	;
+create table modelo (
+	id_marca numeric(7) not null,
+	id_modelo numeric(7) not null,
+	nome_modelo varchar(120) not null unique,
+	ativo char(1)
+		constraint modelo_ativo check(ativo in('S', 's', 'N', 'n')),
+		constraint fk_tbl_marca foreign key (id_marca) references marca (id_marca),
+		constraint pk_modelo primary key (id_marca, id_modelo)
+);
+
+
+insert into marca (id_marca, nome_marca, ativo)valeus
+	(seq_id_marca.nextval, 'Fiat', 'N'),
+--site venda carro.
